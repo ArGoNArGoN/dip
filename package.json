@@ -26,7 +26,6 @@
         "zone.js": "~0.14.2"
     },
     "devDependencies": {
-        "husky": "^8.0.3",
         "@angular-devkit/build-angular": "^17.0.0",
         "@angular/cli": "^17.0.0",
         "@angular/compiler-cli": "^17.0.0",
@@ -38,10 +37,5 @@
         "karma-jasmine": "~5.1.0",
         "karma-jasmine-html-reporter": "~2.1.0",
         "typescript": "~5.2.2"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "ng test"
-        }
     }
 }
