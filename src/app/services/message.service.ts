@@ -1,7 +1,7 @@
-import {AbstractMessageService} from "../infrastructure-services/abstract-message.service";
-import {Message} from "../infrastructure-models/message/message.interfaces";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {Injectable} from "@angular/core";
+import {AbstractMessageService} from "@infrastructure-services/abstract-message.service";
+import {Message} from "@infrastructure-models/message/message.interfaces";
 
 @Injectable({
     providedIn: 'root',

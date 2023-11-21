@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
-import {WrapperComponent} from "@pages/wrapper/wrapper.component";
 import {MatButtonModule} from "@angular/material/button";
 
+import {WrapperComponent} from "@pages/wrapper/wrapper.component";
 
 const children: Routes = [
     {path: 'patients', loadChildren: () => import('@pages/patients/patients.module').then(p => p.PatientsModule)},

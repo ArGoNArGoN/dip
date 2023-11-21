@@ -1,17 +1,22 @@
-import {PatientsComponent} from "@pages/patients/patients.component";
-import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
-import {AbstractPatientsService} from "../../infrastructure-services/abstract-patients.service";
-import {AbstractContactsService} from "../../infrastructure-services/abstract-contacts.service";
 import {NO_ERRORS_SCHEMA} from "@angular/core";
-import {ALL_PATIENTS, PATIENT_WITH_CONTACT} from "../../mock/data/mock-patients.consts";
-import {delay, of, throwError} from "rxjs";
-import {AbstractMessageService} from "../../infrastructure-services/abstract-message.service";
-import {SpyService} from "../../../common/spy/spy.interfaces";
-import {MOCK_DELAY} from "../../mock/data/mock.consts";
-import {By} from "@angular/platform-browser";
 import {MatTableModule} from "@angular/material/table";
-import {LoadingModule} from "../../widgets/loading/loading.module";
 import {CommonModule} from "@angular/common";
+import {By} from "@angular/platform-browser";
+import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
+import {delay, of, throwError} from "rxjs";
+
+import {SpyService} from "@common/spy/spy.interfaces";
+
+import {PatientsComponent} from "@pages/patients/patients.component";
+
+import {AbstractPatientsService} from "@infrastructure-services/abstract-patients.service";
+import {AbstractContactsService} from "@infrastructure-services/abstract-contacts.service";
+import {AbstractMessageService} from "@infrastructure-services/abstract-message.service";
+
+import {ALL_PATIENTS, PATIENT_WITH_CONTACT} from "@mock/data/mock-patients.consts";
+import {MOCK_DELAY} from "@mock/data/mock.consts";
+
+import {LoadingModule} from "@widgets/loading/loading.module";
 
 describe('Регистр пациентов', () => {
     /**
@@ -27,7 +32,7 @@ describe('Регистр пациентов', () => {
     const fakePatientService: SpyService<AbstractPatientsService, 'getAllPatient'> = jasmine.createSpyObj(['getAllPatient']);
     const fakeContactsService: SpyService<AbstractContactsService, 'setContacts'> = {
         setContacts: jasmine.createSpy('setContacts').and.returnValue(of(ALL_PATIENTS)),
-    }
+    };
 
     beforeEach(async () => {
         fakePatientService.getAllPatient.and.returnValue(of(ALL_PATIENTS));

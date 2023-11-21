@@ -1,8 +1,10 @@
-import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
 
 import {LoadingComponent} from './loading.component';
-import {CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
+import {ChangeDetectionStrategy, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {By} from "@angular/platform-browser";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {CommonModule} from "@angular/common";
 
 describe('LoadingComponent', () => {
     let component: LoadingComponent;
@@ -10,8 +12,11 @@ describe('LoadingComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
+            imports: [CommonModule, MatProgressSpinnerModule],
             declarations: [LoadingComponent],
             schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        }).overrideComponent(LoadingComponent, {
+            set: {changeDetection: ChangeDetectionStrategy.Default},
         }).compileComponents();
     });
 
@@ -29,6 +34,8 @@ describe('LoadingComponent', () => {
         component.loading = true;
         fixture.detectChanges(); // заставляем обновить шаблон
 
+        console.log(fixture.debugElement.nativeElement);
+
         const preloader = fixture.debugElement.query(By.css('.spinner'));
 
         expect(preloader).not.toBeNull();
@@ -43,12 +50,15 @@ describe('LoadingComponent', () => {
         expect(preloader).toBeNull();
     });
 
-    it('НЕ должен отображаться spinner при loading = false', () => {
+    it('НЕ должен отображаться spinner при loading = false', fakeAsync(() => {
         component.loading = false;
+        console.log(fixture.debugElement.nativeElement);
+
         fixture.detectChanges(); // заставляем обновить шаблон
+        console.log(fixture.debugElement.nativeElement);
 
         const preloader = fixture.debugElement.query(By.css('.spinner'));
 
         expect(preloader).toBeNull();
-    });
+    }));
 });

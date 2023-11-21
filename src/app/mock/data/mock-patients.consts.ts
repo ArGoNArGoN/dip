@@ -1,5 +1,6 @@
-import {Patient} from "../../infrastructure-models/patient/patient.interfaces";
-import {EMPTY_METHOD} from "./mock.consts";
+import {EMPTY_METHOD} from "@mock/data/mock.consts";
+
+import {Patient} from "@infrastructure-models/patient/patient.interfaces";
 
 export const PATIENT_WITH_CONTACT: Patient = {
     lastName: 'Масленников',

@@ -1,4 +1,4 @@
-import {SetContact} from "../contact/contact.interfaces";
+import {SetContact} from "@infrastructure-models/contact/contact.interfaces";
 
 export interface Patient extends SetContact {
     readonly lastName: string;

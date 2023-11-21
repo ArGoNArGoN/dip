@@ -1,19 +1,20 @@
-import {Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
 import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
 import {BehaviorSubject, finalize} from "rxjs";
 
-import {AbstractContactsService} from "../../infrastructure-services/abstract-contacts.service";
-import {AbstractPatientsService} from "../../infrastructure-services/abstract-patients.service";
-import {Patient} from "../../infrastructure-models/patient/patient.interfaces";
+import {AbstractContactsService} from "@infrastructure-services/abstract-contacts.service";
+import {AbstractPatientsService} from "@infrastructure-services/abstract-patients.service";
+import {Patient} from "@infrastructure-models/patient/patient.interfaces";
 
 import {PATIENT_COLUMNS} from "@pages/patients/models/patients.consts";
-import {AbstractMessageService} from "../../infrastructure-services/abstract-message.service";
+import {AbstractMessageService} from "@infrastructure-services/abstract-message.service";
 
 @UntilDestroy()
 @Component({
     selector: 'app-patients',
     templateUrl: './patients.component.html',
-    styleUrl: './patients.component.scss'
+    styleUrl: './patients.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PatientsComponent implements OnInit {
     public readonly columns = PATIENT_COLUMNS;

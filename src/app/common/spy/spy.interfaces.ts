@@ -9,4 +9,3 @@ type ToSpyFunctions<TService> = {
 };
 
 export type SpyService<TService, VMethods extends keyof TService> = ToSpyFunctions<GetOnlyFunctionOnType<TService, VMethods>>;
-

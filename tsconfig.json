@@ -33,7 +33,22 @@
             ],
             "@models/*": [
                 "src/app/models/*"
-            ]
+            ],
+            "@mock/*": [
+                "src/app/mock/*"
+            ],
+            "@common/*": [
+                "src/app/common/*"
+            ],
+            "@infrastructure-models*": [
+                "src/app/infrastructure/models*"
+            ],
+            "@infrastructure-services*": [
+                "src/app/infrastructure/services*"
+            ],
+            "@widgets*": [
+                "src/app/modules/widgets*"
+            ],
         }
     },
     "angularCompilerOptions": {

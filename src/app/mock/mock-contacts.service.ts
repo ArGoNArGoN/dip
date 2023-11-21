@@ -1,8 +1,10 @@
 import {Injectable} from "@angular/core";
-import {MOCK_DELAY} from "./data/mock.consts";
 import {delay, Observable, of} from "rxjs";
-import {AbstractContactsService} from "../infrastructure-services/abstract-contacts.service";
-import {SetContact} from "../infrastructure-models/contact/contact.interfaces";
+
+import {MOCK_DELAY} from "@mock/data/mock.consts";
+
+import {AbstractContactsService} from "@infrastructure-services/abstract-contacts.service";
+import {SetContact} from "@infrastructure-models/contact/contact.interfaces";
 
 @Injectable({
     providedIn: 'root',
