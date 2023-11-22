@@ -179,7 +179,6 @@ describe('Регистр пациентов', () => {
 
         component.ngOnInit();
 
-        // expect(0).toBeNull();
         expect(preloader).toHaveBeenCalledWith(false);
     });
 
