@@ -49,6 +49,9 @@
             "@widgets*": [
                 "src/app/modules/widgets*"
             ],
+            "@port-type*": [
+                "src/app/port-type*"
+            ]
         }
     },
     "angularCompilerOptions": {

@@ -34,8 +34,6 @@ describe('LoadingComponent', () => {
         component.loading = true;
         fixture.detectChanges(); // заставляем обновить шаблон
 
-        console.log(fixture.debugElement.nativeElement);
-
         const preloader = fixture.debugElement.query(By.css('.spinner'));
 
         expect(preloader).not.toBeNull();
@@ -52,10 +50,8 @@ describe('LoadingComponent', () => {
 
     it('НЕ должен отображаться spinner при loading = false', fakeAsync(() => {
         component.loading = false;
-        console.log(fixture.debugElement.nativeElement);
 
         fixture.detectChanges(); // заставляем обновить шаблон
-        console.log(fixture.debugElement.nativeElement);
 
         const preloader = fixture.debugElement.query(By.css('.spinner'));
 

@@ -10,10 +10,9 @@ import {AbstractMessageService} from "@infrastructure-services/abstract-message.
 import {AbstractPatientsService} from "@infrastructure-services/abstract-patients.service";
 import {AbstractContactsService} from "@infrastructure-services/abstract-contacts.service";
 
-import {MockPatientsService} from "@mock/mock-patients.service";
-import {MockContactsService} from "@mock/mock-contacts.service";
-
 import {MessageService} from "@services/message.service";
+import {PatientsApiService} from "@services/api/patients/patients-api.service";
+import {ContactsApiService} from "@services/api/contacts/contacts-api.service";
 
 const route: Routes = [
     {path: '', component: PatientsComponent}
@@ -29,8 +28,8 @@ const route: Routes = [
         LoadingModule,
     ],
     providers: [
-        {provide: AbstractPatientsService, useClass: MockPatientsService},
-        {provide: AbstractContactsService, useClass: MockContactsService},
+        {provide: AbstractPatientsService, useClass: PatientsApiService},
+        {provide: AbstractContactsService, useClass: ContactsApiService},
         {provide: AbstractMessageService, useClass: MessageService},
     ],
 })
