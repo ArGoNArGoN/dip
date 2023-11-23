@@ -3,7 +3,8 @@ import {MatTableModule} from "@angular/material/table";
 import {CommonModule} from "@angular/common";
 import {By} from "@angular/platform-browser";
 import {ComponentFixture, fakeAsync, TestBed, tick} from "@angular/core/testing";
-import {delay, of, throwError} from "rxjs";
+import {of, throwError} from "rxjs";
+import {delay} from "rxjs/operators";
 
 import {SpyService} from "@common/spy/spy.interfaces";
 
@@ -83,12 +84,12 @@ describe('Регистр пациентов', () => {
 
     it('ngOnInit строки не должны меняться, если getAllPatient сервиса AbstractPatientsService вернул ошибку', () => {
         // метод сервиса возвращает ошибку
-        fakePatientService.getAllPatient.and.returnValue(throwError(() => 'error: Непредвиденная ошибка'));
+        fakePatientService.getAllPatient.and.returnValue(throwError(new Error('error: Непредвиденная ошибка')));
         const rows = spyOn(component.rows$, "next");
 
         component.ngOnInit();
 
-        // проверяем, что строки изменились
+        // проверяем, что строки не изменились
         expect(rows).not.toHaveBeenCalled();
     });
 
@@ -96,7 +97,7 @@ describe('Регистр пациентов', () => {
         const message = 'error: Непредвиденная ошибка';
 
         // метод сервиса возвращает ошибку
-        fakePatientService.getAllPatient.and.returnValue(throwError(() => message));
+        fakePatientService.getAllPatient.and.returnValue(throwError(message));
         fakeMessageService.error.calls.reset();
 
         component.ngOnInit();
@@ -108,7 +109,7 @@ describe('Регистр пациентов', () => {
         const message = 'error: Непредвиденная ошибка';
 
         // метод сервиса возвращает ошибку
-        fakeContactsService.setContacts.and.returnValue(throwError(() => message));
+        fakeContactsService.setContacts.and.returnValue(throwError(message));
         fakeMessageService.error.calls.reset();
 
         component.ngOnInit();
@@ -141,7 +142,7 @@ describe('Регистр пациентов', () => {
         const message = 'error: Непредвиденная ошибка';
 
         // метод сервиса возвращает ошибку
-        fakePatientService.getAllPatient.and.returnValue(throwError(() => message));
+        fakePatientService.getAllPatient.and.returnValue(throwError(message));
         const preloader = spyOn(component.preloaderGrid$, 'next');
 
         component.ngOnInit();
@@ -174,7 +175,7 @@ describe('Регистр пациентов', () => {
         const message = 'error: Непредвиденная ошибка';
 
         // метод сервиса возвращает ошибку
-        fakeContactsService.setContacts.and.returnValue(throwError(() => message));
+        fakeContactsService.setContacts.and.returnValue(throwError(message));
         const preloader = spyOn(component.preloaderContacts$, 'next');
 
         component.ngOnInit();

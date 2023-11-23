@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
-import {delay, Observable, of} from "rxjs";
-
+import {Observable, of} from "rxjs";
+import {delay} from "rxjs/operators";
 
 import {ISearchPatientsRequest, ISearchPatientsResponse} from "@port-type/patients/models/patients.interfaces";
 import {GET_PATIENTS} from "@port-type/patients/models/patients.consts";

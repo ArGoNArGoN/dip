@@ -1,5 +1,6 @@
 import {Injectable} from "@angular/core";
-import {delay, Observable, of} from "rxjs";
+import {delay} from "rxjs/operators";
+import {Observable, of} from "rxjs";
 
 import {IGetContactsRequest, IGetContactsResponse} from "@port-type/contacts/models/contacts.interfaces";
 

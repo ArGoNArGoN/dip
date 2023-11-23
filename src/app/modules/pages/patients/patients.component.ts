@@ -1,6 +1,7 @@
 import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
-import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy";
-import {BehaviorSubject, finalize} from "rxjs";
+import {UntilDestroy, untilDestroyed} from "@ngneat/until-destroy"
+import {BehaviorSubject} from "rxjs";
+import {finalize} from "rxjs/operators";
 
 import {AbstractContactsService} from "@infrastructure-services/abstract-contacts.service";
 import {AbstractPatientsService} from "@infrastructure-services/abstract-patients.service";
@@ -13,7 +14,7 @@ import {AbstractMessageService} from "@infrastructure-services/abstract-message.
 @Component({
     selector: 'app-patients',
     templateUrl: './patients.component.html',
-    styleUrl: './patients.component.scss',
+    styleUrls: ['./patients.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PatientsComponent implements OnInit {

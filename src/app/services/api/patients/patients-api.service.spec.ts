@@ -1,5 +1,6 @@
 import {TestBed} from '@angular/core/testing';
-import {finalize, of, throwError} from "rxjs";
+import {of, throwError} from "rxjs";
+import {finalize} from "rxjs/operators";
 
 import {SpyService} from "@common/spy/spy.interfaces";
 
@@ -72,10 +73,12 @@ describe('PatientsApiService', () => {
     it('getAllPatient должен вернуть ошибку, если сервис вернул Error', done => {
         const expectError = new Error('Ошибка сервиса');
 
-        fakePatientServicePortType.searchPatients.and.returnValue(throwError(() => expectError));
+        fakePatientServicePortType.searchPatients.and.returnValue(throwError(expectError));
 
         service.getAllPatient().pipe(finalize(done)).subscribe({
-            error: error => expect(error).toEqual(expectError),
+            error: error => {
+                expect(error).toEqual(expectError)
+            },
         });
     });
 });

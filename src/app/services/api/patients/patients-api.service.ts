@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
-import {map, Observable} from "rxjs";
+import {Observable} from "rxjs";
+import {map} from "rxjs/operators";
 
 import {Patient} from "@infrastructure-models/patient/patient.interfaces";
 import {AbstractPatientsService} from "@infrastructure-services/abstract-patients.service";

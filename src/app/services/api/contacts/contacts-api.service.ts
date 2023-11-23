@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {map, Observable, of, tap} from "rxjs";
 
 import {FilterHelper} from "@common/helpers/filter-helper";
 
@@ -9,6 +8,8 @@ import {SetContact} from "@infrastructure-models/contact/contact.interfaces";
 import {ContactImpl} from "@services/api/contacts/models/contact-impl/contact-impl";
 
 import {ContactServicePortType} from "@port-type/contacts/contact-port-type.service";
+import {Observable, of} from "rxjs";
+import {map, tap} from "rxjs/operators";
 
 @Injectable({
     providedIn: 'root'

@@ -1,5 +1,6 @@
 import {TestBed} from '@angular/core/testing';
-import {finalize, of, throwError} from "rxjs";
+import {of, throwError} from "rxjs";
+import {finalize} from "rxjs/operators";
 
 import {EMPTY_METHOD} from "@mock/data/mock.consts";
 
@@ -133,7 +134,7 @@ describe('ContactApiService', () => {
     it('setContacts должен вернуть ошибку, если сервис вернул Error', done => {
         const expectError = new Error('Ошибка сервиса');
 
-        fakeContactServicePortType.getContacts.and.returnValue(throwError(() => expectError));
+        fakeContactServicePortType.getContacts.and.returnValue(throwError(expectError));
 
         service.setContacts([setContact]).pipe(finalize(done)).subscribe({
             error: error => expect(error).toEqual(expectError),
