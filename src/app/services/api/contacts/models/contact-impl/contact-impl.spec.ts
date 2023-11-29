@@ -11,8 +11,30 @@ const FULL_CONTACT: IContacts = {
 };
 
 describe('Contact', () => {
+    let contact: Contact;
+
+    beforeEach(() => {
+        contact = new ContactImpl(FULL_CONTACT);
+    });
+
     it('должен быть создан', () => {
-        const contact = new ContactImpl(FULL_CONTACT);
+        expect(contact).toBeTruthy();
+    });
+
+    it('id может быть отрицательным', () => {
+        contact = new ContactImpl({
+            ...FULL_CONTACT,
+            id: -1,
+        });
+
+        expect(contact).toBeTruthy();
+    });
+
+    it('id может быть 0', () => {
+        contact = new ContactImpl({
+            ...FULL_CONTACT,
+            id: 0,
+        });
 
         expect(contact).toBeTruthy();
     });
@@ -24,23 +46,5 @@ describe('Contact', () => {
         });
 
         expect(createContact.bind(null)).toThrow(new Error('id contact-impl is null or undefined!'))
-    });
-
-    it('id не может быть отрицательным', () => {
-        const contact = new ContactImpl({
-            ...FULL_CONTACT,
-            id: -1,
-        });
-
-        expect(contact).toBeTruthy();
-    });
-
-    it('id не может быть 0', () => {
-        const contact = new ContactImpl({
-            ...FULL_CONTACT,
-            id: 0,
-        });
-
-        expect(contact).toBeTruthy();
     });
 });

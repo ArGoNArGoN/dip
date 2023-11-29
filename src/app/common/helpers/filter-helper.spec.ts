@@ -2,22 +2,46 @@ import {FilterHelper} from "@common/helpers/filter-helper";
 
 describe('FilterHelper', () => {
     it('isDefined для 0 должен вернуть true', () => {
-        expect(FilterHelper.isDefined(0)).toBeTruthy();
+        const object = 0;
+
+        const result = FilterHelper.isDefined(object);
+
+        expect(result).toBeTruthy();
     });
     it('isDefined для object должен вернуть true', () => {
-        expect(FilterHelper.isDefined({})).toBeTruthy();
+        const object = {};
+
+        const result = FilterHelper.isDefined(object);
+
+        expect(result).toBeTruthy();
     });
     it('isDefined для false должен вернуть true', () => {
-        expect(FilterHelper.isDefined(false)).toBeTruthy();
+        const object = false;
+
+        const result = FilterHelper.isDefined(object);
+
+        expect(result).toBeTruthy();
     });
     it('isDefined для true должен вернуть true', () => {
-        expect(FilterHelper.isDefined(true)).toBeTruthy();
+        const object = true;
+
+        const result = FilterHelper.isDefined(object);
+
+        expect(result).toBeTruthy();
     });
 
     it('isDefined для null должен вернуть false', () => {
-        expect(FilterHelper.isDefined(null)).not.toBeTruthy();
+        const object = null;
+
+        const result = FilterHelper.isDefined(object);
+
+        expect(result).not.toBeTruthy();
     });
     it('isDefined для undefined должен вернуть false', () => {
-        expect(FilterHelper.isDefined(undefined)).not.toBeTruthy();
+        const object = undefined;
+
+        const result = FilterHelper.isDefined(object);
+
+        expect(result).not.toBeTruthy();
     });
 })

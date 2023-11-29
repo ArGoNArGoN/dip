@@ -1,6 +1,5 @@
 import {TestBed} from '@angular/core/testing';
 import {of, throwError} from "rxjs";
-import {finalize} from "rxjs/operators";
 
 import {EMPTY_METHOD} from "@mock/data/mock.consts";
 
@@ -27,7 +26,8 @@ describe('ContactApiService', () => {
     let service: ContactsApiService;
     let setContact: SetContact;
 
-    const emptySetContact: SetContact = {setContact: EMPTY_METHOD};
+    /**Мок для тестирования вызова contactId: undefined*/
+    const emptySetContact: SetContact = {contactId: undefined, setContact: EMPTY_METHOD};
 
     const fakeContactServicePortType: SpyService<ContactServicePortType, 'getContacts'> = jasmine.createSpyObj([
         'getContacts',
@@ -39,15 +39,19 @@ describe('ContactApiService', () => {
                 {provide: ContactServicePortType, useValue: fakeContactServicePortType}
             ],
         });
+    });
+
+    beforeEach(() => {
         service = TestBed.inject(ContactsApiService);
     });
 
     beforeEach(() => {
         fakeContactServicePortType.getContacts.and.returnValue(of(GET_CONTACTS));
-        setContact = {
-            contactId: CONTACT_ID,
-            setContact: EMPTY_METHOD,
-        }
+        setContact = {contactId: CONTACT_ID, setContact: EMPTY_METHOD};
+    });
+
+    beforeEach(() => {
+        fakeContactServicePortType.getContacts.calls.reset();
     });
 
     it('должен быть создан', () => {
@@ -58,16 +62,6 @@ describe('ContactApiService', () => {
         service.setContacts([setContact]);
 
         expect(fakeContactServicePortType.getContacts).toHaveBeenCalled();
-    });
-
-    it('setContacts должен фильтровать пустые contactId при вызове getContacts сервиса ContactServicePortType', () => {
-        fakeContactServicePortType.getContacts.and.returnValue(of(GET_CONTACTS));
-
-        service.setContacts([setContact, emptySetContact]);
-
-        expect(fakeContactServicePortType.getContacts).toHaveBeenCalledWith({
-            filters: {contactIds: [CONTACT_ID]},
-        });
     });
 
     it('setContacts должен фильтровать пустые contactId при вызове getContacts сервиса ContactServicePortType', () => {
@@ -99,16 +93,24 @@ describe('ContactApiService', () => {
     it('setContacts должен вернуть пустой массив, если results = []', done => {
         fakeContactServicePortType.getContacts.and.returnValue(of({result: [], count: 0}));
 
-        service.setContacts([setContact]).pipe(finalize(done)).subscribe({
-            next: data => expect(data).toEqual([setContact]),
+        service.setContacts([setContact]).subscribe({
+            next: data => {
+                expect(data).toEqual([setContact]);
+                done();
+            },
+            error: done.fail,
         });
     });
 
     it('setContacts должен вернуть пустой массив, если results = undefined', done => {
         fakeContactServicePortType.getContacts.and.returnValue(of({result: undefined, count: 0}));
 
-        service.setContacts([setContact]).pipe(finalize(done)).subscribe({
-            next: data => expect(data).toEqual([setContact]),
+        service.setContacts([setContact]).subscribe({
+            next: data => {
+                expect(data).toEqual([setContact]);
+                done();
+            },
+            error: done.fail,
         });
     });
 
@@ -118,8 +120,12 @@ describe('ContactApiService', () => {
 
         fakeContactServicePortType.getContacts.and.returnValue(of({result: result, count: 1}));
 
-        service.setContacts([setContact]).pipe(finalize(done)).subscribe({
-            next: () => expect(spyResultMap).toHaveBeenCalled(),
+        service.setContacts([setContact]).subscribe({
+            next: () => {
+                expect(spyResultMap).toHaveBeenCalled()
+                done();
+            },
+            error: done.fail,
         });
     });
 
@@ -136,8 +142,12 @@ describe('ContactApiService', () => {
 
         fakeContactServicePortType.getContacts.and.returnValue(throwError(expectError));
 
-        service.setContacts([setContact]).pipe(finalize(done)).subscribe({
-            error: error => expect(error).toEqual(expectError),
+        service.setContacts([setContact]).subscribe({
+            next: () => done.fail(),
+            error: error => {
+                expect(error).toEqual(expectError)
+                done();
+            },
         });
     });
 });

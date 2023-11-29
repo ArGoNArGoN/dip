@@ -1,4 +1,4 @@
-import {NO_ERRORS_SCHEMA} from "@angular/core";
+import {ChangeDetectionStrategy, CUSTOM_ELEMENTS_SCHEMA} from "@angular/core";
 import {MatTableModule} from "@angular/material/table";
 import {CommonModule} from "@angular/common";
 import {By} from "@angular/platform-browser";
@@ -20,25 +20,21 @@ import {MOCK_DELAY} from "@mock/data/mock.consts";
 import {LoadingModule} from "@widgets/loading/loading.module";
 
 describe('Регистр пациентов', () => {
-    /**
-     * Initialized for each test
-     * */
     let component: PatientsComponent;
     let fixture: ComponentFixture<PatientsComponent>;
 
-    /**
-     * fake dependencies
-     * */
-    const fakeMessageService: SpyService<AbstractMessageService, 'error'> = jasmine.createSpyObj(['message', 'error']);
+    const fakeMessageService: SpyService<AbstractMessageService, 'error'> = jasmine.createSpyObj(['error']);
     const fakePatientService: SpyService<AbstractPatientsService, 'getAllPatient'> = jasmine.createSpyObj(['getAllPatient']);
     const fakeContactsService: SpyService<AbstractContactsService, 'setContacts'> = {
         setContacts: jasmine.createSpy('setContacts').and.returnValue(of(ALL_PATIENTS)),
     };
 
-    beforeEach(async () => {
+    beforeEach(() => {
         fakePatientService.getAllPatient.and.returnValue(of(ALL_PATIENTS));
         fakeContactsService.setContacts.and.returnValue(of(ALL_PATIENTS));
+    });
 
+    beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [
                 CommonModule,
@@ -52,7 +48,9 @@ describe('Регистр пациентов', () => {
                 {provide: AbstractContactsService, useValue: fakeContactsService},
                 {provide: AbstractMessageService, useValue: fakeMessageService},
             ],
-            schemas: [NO_ERRORS_SCHEMA],
+            schemas: [CUSTOM_ELEMENTS_SCHEMA],
+        }).overrideComponent(PatientsComponent, {
+            set: {changeDetection: ChangeDetectionStrategy.Default},
         }).compileComponents();
     });
 
@@ -60,6 +58,15 @@ describe('Регистр пациентов', () => {
         fixture = TestBed.createComponent(PatientsComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
+    });
+
+    beforeEach(() => {
+        fakePatientService.getAllPatient.calls.reset();
+        fakeContactsService.setContacts.calls.reset();
+    });
+
+    it('должен быть создан', () => {
+        expect(component).toBeTruthy();
     });
 
     it('ngOnInit должен проинициализировать rows$', () => {

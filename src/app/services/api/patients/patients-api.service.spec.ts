@@ -1,6 +1,5 @@
 import {TestBed} from '@angular/core/testing';
 import {of, throwError} from "rxjs";
-import {finalize} from "rxjs/operators";
 
 import {SpyService} from "@common/spy/spy.interfaces";
 
@@ -34,6 +33,9 @@ describe('PatientsApiService', () => {
                 {provide: PatientsServicePortType, useValue: fakePatientServicePortType}
             ],
         });
+    });
+
+    beforeEach(() => {
         service = TestBed.inject(PatientsApiService);
     });
 
@@ -51,11 +53,15 @@ describe('PatientsApiService', () => {
         expect(fakePatientServicePortType.searchPatients).toHaveBeenCalledWith({filters: {}});
     });
 
-    it('getAllPatient должен возвращать [], если result = null', done => {
+    it('getAllPatient должен возвращать [], если result = undefined', done => {
         fakePatientServicePortType.searchPatients.and.returnValue(of<ISearchPatientsResponse>({count: 0}));
 
-        service.getAllPatient().pipe(finalize(done)).subscribe({
-            next: emptyArray => expect(emptyArray).toEqual([]),
+        service.getAllPatient().subscribe({
+            next: emptyArray => {
+                expect(emptyArray).toEqual([]);
+                done();
+            },
+            error: done.fail,
         });
     });
 
@@ -65,8 +71,12 @@ describe('PatientsApiService', () => {
             count: 0
         }));
 
-        service.getAllPatient().pipe(finalize(done)).subscribe({
-            next: emptyArray => expect(emptyArray).toEqual([]),
+        service.getAllPatient().subscribe({
+            next: emptyArray => {
+                expect(emptyArray).toEqual([]);
+                done();
+            },
+            error: done.fail,
         });
     });
 
@@ -75,10 +85,22 @@ describe('PatientsApiService', () => {
 
         fakePatientServicePortType.searchPatients.and.returnValue(throwError(expectError));
 
-        service.getAllPatient().pipe(finalize(done)).subscribe({
+        service.getAllPatient().subscribe({
+            next: () => done.fail(),
             error: error => {
-                expect(error).toEqual(expectError)
+                expect(error).toEqual(expectError);
+                done();
             },
+        });
+    });
+
+    it('getAllPatient должен список элементов', done => {
+        service.getAllPatient().subscribe({
+            next: array => {
+                expect(array.length).toBe(SEARCH_PATIENTS.result!.length);
+                done();
+            },
+            error: done.fail,
         });
     });
 });

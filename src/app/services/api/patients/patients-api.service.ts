@@ -8,7 +8,6 @@ import {AbstractPatientsService} from "@infrastructure-services/abstract-patient
 import {PatientsServicePortType} from "@port-type/patients/patients-port-type.service";
 import {PatientImpl} from "@services/api/patients/models/patient-impl/patient-impl";
 
-
 @Injectable({
     providedIn: 'root'
 })
